@@ -1,1 +1,214 @@
-# https-tuapi.com-video-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Videos TikTok en Alta Calidad</title>
+    <style>
+        body {
+            background: #0f0f0f;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        .container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .search-bar input {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 300px;
+            font-size: 1rem;
+        }
+        .search-bar button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background: #00cccc;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .search-bar button:hover {
+            background: #009999;
+        }
+        .results {
+            margin-top: 2rem;
+        }
+        .results .video {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+        .results .video h2 {
+            margin: 0 0 0.5rem 0;
+        }
+        .results .video p {
+            margin: 0;
+        }
+        .download-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background: #00cccc;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .download-button:hover {
+            background: #009999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buscador de Videos TikTok en Alta Calidad</h1>
+        <div class="search-bar">
+            <input type="text" id="videoUrl" placeholder="Ingresa la URL del video de TikTok">
+            <button onclick="buscarVideo()">Buscar</button>
+        </div>
+        <div class="results" id="results">
+            <!-- Aquí se mostrarán los resultados -->
+        </div>
+    </div>
+    <script>
+        async function buscarVideo() {
+            const url = document.getElementById('videoUrl').value;
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            if (!url) {
+                alert('Por favor, ingresa una URL');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://tuapi.com/video', { // Cambia esta URL por tu endpoint real
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al obtener los datos del video');
+                }
+
+                const data = await response.json();
+                mostrarResultado(data);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function mostrarResultado(data) {
+            const results = document.getElementById('results');
+            const video = document.createElement('div');
+            video.className = 'video';
+            video.innerHTML = `
+                <h2>${data.title}</h2>
+                <p>${data.description}</p>
+                <button class="download-button" onclick="descargarVideo('${data.downloadUrl}')">Descargar en Alta Calidad</button>
+            `;
+            results.appendChild(video);
+        }
+
+        function descargarVideo(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'video.mp4');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Page Not Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    html {
+      color: #888;
+      display: table;
+      font-family: sans-serif;
+      height: 100%;
+      text-align: center;
+      width: 100%;
+    }
+
+    body {
+      display: table-cell;
+      vertical-align: middle;
+      margin: 2em auto;
+    }
+
+    h1 {
+      color: #555;
+      font-size: 2em;
+      font-weight: 400;
+    }
+
+    p {
+      margin: 0 auto;
+      width: 280px;
+    }
+
+    @media only screen and (max-width: 280px) {
+
+      body,
+      p {
+        width: 95%;
+      }
+
+      h1 {
+        font-size: 1.5em;
+        margin: 0 0 0.3em;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Page Not Found</h1>
+  <p>Sorry, but the page you were trying to view does not exist.</p>
+</body>
+
+</html>
+<!-- IE needs 512+ bytes: https://docs.microsoft.com/archive/blogs/ieinternals/friendly-http-error-pages -->damian.vi 
